@@ -5,7 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FridgeController; // Dodaj nowy kontroler
 
 Route::get('/fun', [ApiController::class, 'getCatImages'])->name('fun');
 
@@ -19,22 +19,18 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
-// Grupa tras z prefixem '/home'
-Route::middleware(['auth'])->prefix('home')->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Dodaj ścieżkę do metody addFood
-    Route::post('/add-food', [HomeController::class, 'addFood'])->name('addFood');
-
-    Route::get('/fridge', function () {
-        // Pobierz jedzenie z sesji
-        $foods = session('foods', []);
-
-        return view('fridge', compact('foods'));
-    })->name('fridge');
+    // Dodaj trasę do metod w FridgeController
+    Route::get('/fridge', [FridgeController::class, 'showFridge'])->name('fridge');
+    Route::post('/fridge/add-food', [FridgeController::class, 'addFood'])->name('addFood');
+    Route::get('/fridge/take-food/{foodIndex}', [FridgeController::class, 'takeFood'])->name('takeFood');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
+
+
 
 
 

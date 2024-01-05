@@ -84,11 +84,15 @@
             </form>
 
             <!-- Lista jedzenia w lodówce -->
-            <ul>
-                @foreach ($foods as $food)
-                    <li>{{ $food }}</li>
-                @endforeach
-            </ul>
+            @if(count($foods) > 0)
+                <ul>
+                    @foreach ($foods as $food)
+                        <li>{{ $food->name }} - {{ $food->description }}</li>
+                    @endforeach
+                </ul>
+            @else
+                <p>Brak dostępnego jedzenia w lodówce.</p>
+            @endif
         </div>
         <div class="handle handle-left" id="leftHandle"></div>
         <div class="handle handle-right" id="rightHandle"></div>
@@ -112,4 +116,5 @@
     </script>
 </body>
 </html>
+
 
