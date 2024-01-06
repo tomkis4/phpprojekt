@@ -71,6 +71,9 @@
         /* Styl dla przycisku wylogowania */
         .logout-btn {
             margin-top: 20px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
     </style>
 </head>
@@ -132,6 +135,7 @@
     </script>
 </body>
 </html>
+
 
 
 
