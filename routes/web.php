@@ -5,7 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\FridgeController; // Dodaj nowy kontroler
+use App\Http\Controllers\FridgeController;
 
 Route::get('/fun', [ApiController::class, 'getCatImages'])->name('fun');
 
@@ -29,7 +29,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-
 
 
 

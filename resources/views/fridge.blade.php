@@ -13,8 +13,8 @@
             border: 5px solid #ccc;
             position: relative;
             margin: 50px auto;
-            overflow: hidden; /* Ukrywamy zawartość, która wyjeżdża poza granice lodówki */
-            transition: transform 0.3s ease; /* Dodajemy animację dla właściwości transform */
+            overflow: hidden;
+            transition: transform 0.3s ease;
         }
 
         /* Styl dla zamrażarki (górnej części lodówki) */
@@ -30,7 +30,7 @@
             height: 70%;
             background-color: #ffffff; /* Biały kolor */
             position: relative;
-            padding: 20px; /* Dodajemy odstęp dla formularza i listy */
+            padding: 20px;
         }
 
         /* Styl dla uchwytów (drzwiczek lodówki) */
@@ -42,8 +42,8 @@
             top: 50%;
             transform: translateY(-50%);
             border-radius: 5px;
-            cursor: pointer; /* Dodajemy kursor wskazujący na to, że element jest interaktywny */
-            transition: left 0.3s ease; /* Dodajemy animację dla właściwości left */
+            cursor: pointer;
+            transition: left 0.3s ease;
         }
 
         /* Pozycjonowanie uchwytów */
@@ -78,8 +78,10 @@
             <!-- Formularz dodawania jedzenia -->
             <form action="{{ route('addFood') }}" method="post">
                 @csrf
-                <label for="foodName">Nazwa jedzenia:</label>
-                <input type="text" id="foodName" name="foodName" required>
+                <label for="name">Nazwa jedzenia:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="description">Opis jedzenia:</label>
+                <input type="text" id="description" name="description">
                 <button type="submit">Dodaj jedzenie</button>
             </form>
 
@@ -104,11 +106,10 @@
 
         function toggleFridge() {
             var fridge = document.getElementById("fridge");
-            var handles = document.querySelectorAll('.handle'); /* Znajdujemy wszystkie uchwyty */
+            var handles = document.querySelectorAll('.handle');
 
-            fridge.classList.toggle("open"); /* Dodajemy lub usuwamy klasę, aby otworzyć lub zamknąć lodówkę */
+            fridge.classList.toggle("open");
 
-            /* Dodatkowa obsługa zdarzeń dla uchwytów, aby były dostępne do ponownego kliknięcia */
             handles.forEach(function (handle) {
                 handle.style.pointerEvents = handle.style.pointerEvents === 'none' ? 'auto' : 'none';
             });
@@ -116,5 +117,6 @@
     </script>
 </body>
 </html>
+
 
 

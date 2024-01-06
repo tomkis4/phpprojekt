@@ -39,3 +39,4 @@ class FridgeController extends Controller
 }
 
 
+
