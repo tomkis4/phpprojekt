@@ -13,8 +13,8 @@
             border: 5px solid #ccc;
             position: relative;
             margin: 50px auto;
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            overflow: hidden; /* Ukrywamy zawartość, która wyjeżdża poza granice lodówki */
+            transition: transform 0.3s ease; /* Dodajemy animację dla właściwości transform */
         }
 
         /* Styl dla zamrażarki (górnej części lodówki) */
@@ -30,7 +30,7 @@
             height: 70%;
             background-color: #ffffff; /* Biały kolor */
             position: relative;
-            padding: 20px;
+            padding: 20px; /* Dodajemy odstęp dla formularza i listy */
         }
 
         /* Styl dla uchwytów (drzwiczek lodówki) */
@@ -42,8 +42,8 @@
             top: 50%;
             transform: translateY(-50%);
             border-radius: 5px;
-            cursor: pointer;
-            transition: left 0.3s ease;
+            cursor: pointer; /* Dodajemy kursor wskazujący na to, że element jest interaktywny */
+            transition: left 0.3s ease; /* Dodajemy animację dla właściwości left */
         }
 
         /* Pozycjonowanie uchwytów */
@@ -67,6 +67,11 @@
         .fridge.open .handle-right {
             right: -20px;
         }
+
+        /* Styl dla przycisku wylogowania */
+        .logout-btn {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -75,7 +80,7 @@
     <div class="fridge" id="fridge">
         <div class="freezer"></div>
         <div class="fridge-section">
-            <!-- Formularz dodawania jedzenia -->
+            <!-- Formularz dodawania i zabierania jedzenia -->
             <form action="{{ route('addFood') }}" method="post">
                 @csrf
                 <label for="name">Nazwa jedzenia:</label>
@@ -89,7 +94,10 @@
             @if(count($foods) > 0)
                 <ul>
                     @foreach ($foods as $food)
-                        <li>{{ $food->name }} - {{ $food->description }}</li>
+                        <li>
+                            {{ $food->name }} - {{ $food->description }}
+                            <a href="{{ route('takeFood', ['foodIndex' => $food->id]) }}" onclick="return confirm('Czy na pewno chcesz zabrać to jedzenie?')">Zabierz</a>
+                        </li>
                     @endforeach
                 </ul>
             @else
@@ -100,16 +108,23 @@
         <div class="handle handle-right" id="rightHandle"></div>
     </div>
 
+    <!-- Formularz wylogowania -->
+    <form class="logout-btn" action="{{ route('logout') }}" method="post">
+        @csrf
+        <button type="submit">Wyloguj się</button>
+    </form>
+
     <script>
         document.getElementById("leftHandle").addEventListener("click", toggleFridge);
         document.getElementById("rightHandle").addEventListener("click", toggleFridge);
 
         function toggleFridge() {
             var fridge = document.getElementById("fridge");
-            var handles = document.querySelectorAll('.handle');
+            var handles = document.querySelectorAll('.handle'); /* Znajdujemy wszystkie uchwyty */
 
-            fridge.classList.toggle("open");
+            fridge.classList.toggle("open"); /* Dodajemy lub usuwamy klasę, aby otworzyć lub zamknąć lodówkę */
 
+            /* Dodatkowa obsługa zdarzeń dla uchwytów, aby były dostępne do ponownego kliknięcia */
             handles.forEach(function (handle) {
                 handle.style.pointerEvents = handle.style.pointerEvents === 'none' ? 'auto' : 'none';
             });
@@ -117,6 +132,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

@@ -1,4 +1,5 @@
 <?php
+
 // app/Http/Controllers/FridgeController.php
 
 namespace App\Http\Controllers;
@@ -32,11 +33,12 @@ class FridgeController extends Controller
     public function takeFood($foodIndex)
     {
         $food = Food::findOrFail($foodIndex);
-        $food->delete();
+        $food->delete(); // Lub $food->update(['taken' => true]); jeśli chcesz oznaczyć jedzenie jako zabrane
 
         return redirect()->route('fridge')->with('success', 'Food taken from the fridge!');
     }
 }
+
 
 
 

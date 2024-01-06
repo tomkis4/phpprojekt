@@ -28,6 +28,9 @@
                 <div class="card-body">
                     <!-- Dodatkowa zawartość do wyświetlenia na stronie home -->
                     <p>Place your additional content here.</p>
+                    
+                    <!-- Dodany przycisk/link do lodówki -->
+                    <a href="{{ route('fridge') }}" class="btn btn-primary">Przejdź do lodówki</a>
                 </div>
             </div>
         </div>
