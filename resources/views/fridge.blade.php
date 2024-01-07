@@ -14,7 +14,6 @@
             position: relative;
             margin: 50px auto;
             overflow: hidden; /* Ukrywamy zawartość, która wyjeżdża poza granice lodówki */
-            transition: transform 0.3s ease; /* Dodajemy animację dla właściwości transform */
         }
 
         /* Styl dla zamrażarki (górnej części lodówki) */
@@ -33,39 +32,10 @@
             padding: 20px; /* Dodajemy odstęp dla formularza i listy */
         }
 
-        /* Styl dla uchwytów (drzwiczek lodówki) */
-        .handle {
-            width: 20px;
-            height: 80px;
-            background-color: #a9a9a9; /* Szary kolor */
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            border-radius: 5px;
-            cursor: pointer; /* Dodajemy kursor wskazujący na to, że element jest interaktywny */
-            transition: left 0.3s ease; /* Dodajemy animację dla właściwości left */
-        }
-
-        /* Pozycjonowanie uchwytów */
-        .handle-left {
-            left: 0;
-        }
-
-        .handle-right {
-            right: 0;
-        }
-
-        /* Dodatkowe style dla otwartej lodówki */
-        .fridge.open .fridge-section {
-            transform: translateX(-50%);
-        }
-
-        .fridge.open .handle-left {
-            left: -20px;
-        }
-
-        .fridge.open .handle-right {
-            right: -20px;
+        /* Nowy styl dla suwaka */
+        .food-list {
+            overflow-y: auto; /* Dodajemy przewijanie pionowe */
+            max-height: calc(70% - 40px); /* Maksymalna wysokość listy (70% wysokości lodówki minus odstęp dla formularza) */
         }
 
         /* Styl dla przycisku wylogowania */
@@ -101,22 +71,22 @@
                 <button type="submit">Dodaj jedzenie</button>
             </form>
 
-            <!-- Lista jedzenia w lodówce -->
+            <!-- Zmodyfikowana lista jedzenia z dodanym suwakiem -->
             @if(count($foods) > 0)
-                <ul>
-                    @foreach ($foods as $food)
-                        <li>
-                            {{ $food->name }} - {{ $food->description }}
-                            <a href="{{ route('takeFood', ['foodIndex' => $food->id]) }}" onclick="return confirm('Czy na pewno chcesz zabrać to jedzenie?')">Zabierz</a>
-                        </li>
-                    @endforeach
-                </ul>
+                <div class="food-list">
+                    <ul>
+                        @foreach ($foods as $food)
+                            <li>
+                                {{ $food->name }} - {{ $food->description }}
+                                <a href="{{ route('takeFood', ['foodIndex' => $food->id]) }}" onclick="return confirm('Czy na pewno chcesz zabrać to jedzenie?')">Zabierz</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
             @else
                 <p>Brak dostępnego jedzenia w lodówce.</p>
             @endif
         </div>
-        <div class="handle handle-left" id="leftHandle"></div>
-        <div class="handle handle-right" id="rightHandle"></div>
     </div>
 
     <!-- Formularz wylogowania -->
@@ -127,25 +97,38 @@
 
     <!-- Przycisk do /fun -->
     <a href="{{ route('fun') }}" class="fun-btn">Słodkie kotki</a>
-
     <script>
-        document.getElementById("leftHandle").addEventListener("click", toggleFridge);
-        document.getElementById("rightHandle").addEventListener("click", toggleFridge);
+        // Funkcja sprawdzająca długość pola 'name'
+        function checkNameLength() {
+            var nameInput = document.getElementById('name');
+            var nameLength = nameInput.value.length;
 
-        function toggleFridge() {
-            var fridge = document.getElementById("fridge");
-            var handles = document.querySelectorAll('.handle'); /* Znajdujemy wszystkie uchwyty */
-
-            fridge.classList.toggle("open"); /* Dodajemy lub usuwamy klasę, aby otworzyć lub zamknąć lodówkę */
-
-            /* Dodatkowa obsługa zdarzeń dla uchwytów, aby były dostępne do ponownego kliknięcia */
-            handles.forEach(function (handle) {
-                handle.style.pointerEvents = handle.style.pointerEvents === 'none' ? 'auto' : 'none';
-            });
+            if (nameLength > 100) {
+                alert("Błąd: Pole 'Nazwa jedzenia' nie może przekraczać 100 znaków.");
+                nameInput.value = nameInput.value.substring(0, 100); // Ucinamy tekst do 100 znaków
+            }
         }
+
+        // Funkcja sprawdzająca długość pola 'description'
+        function checkDescriptionLength() {
+            var descriptionInput = document.getElementById('description');
+            var descriptionLength = descriptionInput.value.length;
+
+            if (descriptionLength > 100) {
+                alert("Błąd: Pole 'Opis jedzenia' nie może przekraczać 100 znaków.");
+                descriptionInput.value = descriptionInput.value.substring(0, 100); // Ucinamy tekst do 100 znaków
+            }
+        }
+
+        // Przypisanie funkcji do zdarzenia 'input' dla pól 'name' i 'description'
+        document.getElementById('name').addEventListener('input', checkNameLength);
+        document.getElementById('description').addEventListener('input', checkDescriptionLength);
     </script>
+
 </body>
 </html>
+
+
 
 
 

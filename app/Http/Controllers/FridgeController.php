@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Food;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class FridgeController extends Controller
 {
@@ -18,8 +19,9 @@ class FridgeController extends Controller
     public function addFood(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'nullable',
+            'name' => ['required', 'max:100'],
+            'description' => 'nullable|max:100',
+
         ]);
 
         Food::create([
