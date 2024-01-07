@@ -19,6 +19,12 @@
                                 background-color: #00ff00; /* Zielone tło */
                             }
                         </style>
+
+                        <!-- Przycisk pobierania obrazów kotów -->
+                        <form action="{{ route('downloadCatImages') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-success">Pobierz obrazy kotów</button>
+                        </form>
                     @endif
 
                     <h1>Obrazy kotów</h1>
@@ -35,10 +41,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    // ... Twój istniejący skrypt JavaScript ...
-</script>
-
 @endsection
+
 
