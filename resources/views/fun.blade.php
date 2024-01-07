@@ -1,19 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obrazy kotów</title>
-</head>
-<body>
-    <h1>Obrazy kotów</h1>
+<!-- resources/views/fun.blade.php -->
 
-    @if(isset($catImages) && is_array($catImages))
-        @foreach ($catImages as $catImage)
-            <img src="{{ $catImage['url'] }}" alt="Kot">
-        @endforeach
-    @else
-        <p>Brak dostępnych obrazów kotów.</p>
-    @endif
-</body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Fun Page') }}</div>
+
+                <div class="card-body">
+                    <!-- Zawartość strony /fun -->
+                    @if(auth()->check())
+                        <!-- Warunek sprawdzający, czy użytkownik jest zalogowany -->
+                        <style>
+                            /* Styl dla zalogowanego użytkownika na stronie /fun */
+                            body {
+                                background-color: #00ff00; /* Zielone tło */
+                            }
+                        </style>
+                    @endif
+
+                    <h1>Obrazy kotów</h1>
+
+                    @if(isset($catImages) && is_array($catImages))
+                        @foreach ($catImages as $catImage)
+                            <img src="{{ $catImage['url'] }}" alt="Kot">
+                        @endforeach
+                    @else
+                        <p>Brak dostępnych obrazów kotów.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ... Twój istniejący skrypt JavaScript ...
+</script>
+
+@endsection
+

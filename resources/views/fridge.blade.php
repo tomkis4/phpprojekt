@@ -75,6 +75,14 @@
             top: 10px;
             right: 10px;
         }
+
+        /* Styl dla przycisku do /fun */
+        .fun-btn {
+            margin-top: 20px;
+            position: absolute;
+            top: 10px;
+            right: 100px;
+        }
     </style>
 </head>
 <body>
@@ -117,6 +125,9 @@
         <button type="submit">Wyloguj się</button>
     </form>
 
+    <!-- Przycisk do /fun -->
+    <a href="{{ route('fun') }}" class="fun-btn">Słodkie kotki</a>
+
     <script>
         document.getElementById("leftHandle").addEventListener("click", toggleFridge);
         document.getElementById("rightHandle").addEventListener("click", toggleFridge);
@@ -135,6 +146,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

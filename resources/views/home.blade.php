@@ -28,9 +28,21 @@
                 <div class="card-body">
                     <!-- Dodatkowa zawartość do wyświetlenia na stronie home -->
                     <p>Place your additional content here.</p>
-                    
-                    <!-- Dodany przycisk/link do lodówki -->
-                    <a href="{{ route('fridge') }}" class="btn btn-primary">Przejdź do lodówki</a>
+
+                    <!-- Dodane przyciski -->
+                    <div class="d-flex justify-content-between">
+                        <!-- Przycisk "Przejdź do lodówki" -->
+                        <form action="{{ route('fridge') }}" method="get">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Przejdź do lodówki</button>
+                        </form>
+
+                        <!-- Przycisk "Słodkie kotki" -->
+                        <form action="{{ route('fun') }}" method="get">
+                            @csrf
+                            <button type="submit" class="btn btn-success">Słodkie kotki</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
