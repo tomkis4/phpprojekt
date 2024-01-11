@@ -1,5 +1,4 @@
 <?php
-// app/Http/Controllers/ApiController.php
 
 namespace App\Http\Controllers;
 
@@ -22,7 +21,6 @@ class ApiController extends Controller
 
     public function downloadCatImages()
     {
-        // Logika do pobrania obrazów kotów
         $apiKey = 'live_Kg8HqvTiYpHdztHFk3w6RiVaptksun4cHmjtX90wKZ6qVKz1ZZ47wNizOntIlACC';
         $response = Http::get('https://api.thecatapi.com/v1/images/search?limit=10', [
             'api_key' => $apiKey,
@@ -30,22 +28,23 @@ class ApiController extends Controller
 
         $catImages = $response->json();
 
-        // Logika do zapisywania obrazów w C:\zaliczenie\pobrane
-        $downloadPath = 'C:\zaliczenie\pobrane\\';
-        foreach ($catImages as $catImage) {
-            $imageUrl = $catImage['url'];
-            $imageData = file_get_contents($imageUrl);
-            $fileName = uniqid('cat_') . '.jpg';
-            file_put_contents($downloadPath . $fileName, $imageData);
+        $zip = new \ZipArchive();
+        $zipFileName = 'cat_images.zip';
+        $zipFilePath = storage_path($zipFileName);
+
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE)) {
+            foreach ($catImages as $catImage) {
+                $imageUrl = $catImage['url'];
+                $imageData = file_get_contents($imageUrl);
+                $fileName = uniqid('cat_') . '.jpg';
+                $zip->addFromString($fileName, $imageData);
+            }
+
+            $zip->close();
+
+            return response()->download($zipFilePath)->deleteFileAfterSend(true);
         }
 
-        // Przykład: Zwracamy JSON z informacją o pomyślnym pobraniu i zapisaniu obrazów
-        return response()->json(['message' => 'Images downloaded and saved successfully']);
+        return response()->json(['message' => 'Failed to create zip file'], 500);
     }
 }
-
-
-
-
-
-

@@ -17,20 +17,19 @@ class FridgeController extends Controller
     }
 
     public function addFood(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'max:100'],
-            'description' => 'nullable|max:100',
+{
+    $request->validate([
+        'name' => ['required', 'max:100'],
+        'description' => 'nullable|max:100',
+    ]);
 
-        ]);
+    Food::create([
+        'name' => $request->input('name'),
+        'description' => $request->input('description'),
+    ]);
 
-        Food::create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
-
-        return redirect()->route('fridge')->with('success', 'Food added successfully!');
-    }
+    return redirect()->route('fridge')->with('success', 'Food added successfully!');
+}
 
     public function takeFood($foodIndex)
     {
