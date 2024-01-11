@@ -31,7 +31,7 @@
 
                     @if(isset($catImages) && is_array($catImages))
                         @foreach ($catImages as $catImage)
-                            <img src="{{ $catImage['url'] }}" alt="Kot">
+                            <img src="{{ $catImage['url'] }}" alt="Kot" style="max-width: 300px; height: auto;">
                         @endforeach
                     @else
                         <p>Brak dostępnych obrazów kotów.</p>
@@ -42,5 +42,8 @@
     </div>
 </div>
 @endsection
+
+
+
 
 
